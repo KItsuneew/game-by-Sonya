@@ -9,7 +9,8 @@ const btnStartGachiGame = document.querySelector('.btn__gachi'),
   timerText = document.querySelector('.time'),
   btnPause = document.querySelector('.btn__pause'),
   sectionResult = document.querySelector('.section__result'),
-  overflowBack = document.querySelector('.overflow');
+  overflowBack = document.querySelector('.overflow'),
+  buttonRestartGame = document.querySelector('.button__restart');
 
 
 const cardGeneratorGachi = () => {
@@ -177,23 +178,23 @@ const CheckCard = (e) => {
 }
 
 
-function predTime(val) {
-  let timer = val * 4;
-  function timerGame() {
-    setTimeout(timerGame, 1000);
-    timerText.textContent = timer;
-    timer--;
-    if (timerText.innerHTML < 0) {
-      timerText.innerHTML = 0;
-      console.log('you lose');
-      setTimeout(() => {
-        location.reload()
-      }, 1000)
-    }
+// function predTime(val) {
+//   let timer = val * 4;
+//   function timerGame() {
+//     setTimeout(timerGame, 1000);
+//     timerText.textContent = timer;
+//     timer--;
+//     if (timerText.innerHTML < 0) {
+//       timerText.innerHTML = 0;
+//       console.log('you lose');
+//       setTimeout(() => {
+//         location.reload()
+//       }, 1000)
+//     }
 
-  }
-  timerGame()
-}
+//   }
+//   timerGame()
+// }
 
 
 
@@ -238,4 +239,8 @@ btnPause.addEventListener('click', () => {
   else {
     btnPause.textContent = 'pause'
   }
+})
+
+buttonRestartGame.addEventListener('click', () => {
+  location.reload()
 })
