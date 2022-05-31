@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Memory Game</title>
+  <link rel="shortcut icon" href="./ff.jpg" type="image/x-icon">
+  <link rel="stylesheet" href="style.css" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+</head>
+
+<body>
+  <section class="section__start">
+    <div class="container">
+      <h3 class="title title__game">Memory Games</h3>
+      <button class="btn btn__gachi">Gachiмученник</button>
+      <button class="btn btn__diff">По времени</button>
+      <button class="btn btn__diff">Время + ходы</button>
+    </div>
+  </section>
+  <section class="section__difficult">
+    <div class="container">
+      <h3 class="title title__difficult">Select difficult</h3>
+      <button class="btn btn__easy btn__difful" value="16">Easy</button>
+      <button class="btn btn__medium btn__difful" value="36">Medium</button>
+      <button class="btn btn__hard btn__difful" value="64">Hard</button>
+    </div>
+  </section>
+  <section class="section__game">
+    <p class="time"></p>
+    <span class="material-symbols-outlined btn__pause btn__option">pause</span>
+
+    <div class="cont__game">
+
+    </div>
+  </section>
+  <div class="overflow">
+
+  </div>
+  <section class="section__result">
+    <div class="container__result">
+      <p class="text__result text__your">You WON</p>
+      <p class="text__result text__diff">Your difficult</p>
+      <p class="text__result text__steps">Your steps</p>
+      <p class="text__result text__time">Your time</p>
+    </div>
+  </section>
+  <script src="./app.js"></script>
+</body>
+
+</html>
