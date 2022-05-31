@@ -10,7 +10,9 @@ const btnStartGachiGame = document.querySelector('.btn__gachi'),
   btnPause = document.querySelector('.btn__pause'),
   sectionResult = document.querySelector('.section__result'),
   overflowBack = document.querySelector('.overflow'),
-  buttonRestartGame = document.querySelector('.button__restart');
+  buttonRestartGame = document.querySelector('.button__restart'),
+  yourResult = document.querySelector('.text__your'),
+  yourDiff = document.querySelector('.text__diff');
 
 
 const cardGeneratorGachi = () => {
@@ -114,8 +116,8 @@ const gameNormalPictureOne = (value) => {
         back.classList = "back";
         face.src = el.imgSrc;
         back.setAttribute("name", el.name);
-        section.style.gridTemplateColumns = `repeat(${Math.sqrt(value)}, 7rem)`;
-        section.style.gridTemplateRows = `repeat(${Math.sqrt(value)}, 7rem)`;
+        section.style.gridTemplateColumns = `repeat(${Math.sqrt(value)}, ${(value == 64) ? '5rem' : (value == 36) ? '7rem' : (value == 16) ? '9rem' : 'nice trye)'})`;
+        section.style.gridTemplateRows = `repeat(${Math.sqrt(value)}, ${(value == 64) ? '5rem' : (value == 36) ? '7rem' : (value == 16) ? '9rem' : 'nice trye)'})`;
         section.appendChild(card);
         card.appendChild(face);
         card.appendChild(back);
@@ -170,7 +172,10 @@ const CheckCard = (e) => {
     console.log('you win');
     setTimeout(() => {
       sectionResult.classList.add('activeResult');
-      overflowBack.classList.add('activeOveflow')
+      overflowBack.classList.add('activeOveflow');
+      yourResult.textContent = 'You WIN';
+      yourDiff.textContent = (count == 16) ? 'Your difficult: Easy' : (count == 36) ? 'Your difficult: Medium' : (count == 64) ? 'Your difficult: Hard' : 'nice try )';
+
     }, 600)
   }
 
@@ -178,23 +183,23 @@ const CheckCard = (e) => {
 }
 
 
-// function predTime(val) {
-//   let timer = val * 4;
-//   function timerGame() {
-//     setTimeout(timerGame, 1000);
-//     timerText.textContent = timer;
-//     timer--;
-//     if (timerText.innerHTML < 0) {
-//       timerText.innerHTML = 0;
-//       console.log('you lose');
-//       setTimeout(() => {
-//         location.reload()
-//       }, 1000)
-//     }
+function predTime(val) {
+  let timer = val * 4;
+  function timerGame() {
+    setTimeout(timerGame, 1000);
+    timerText.textContent = timer;
+    timer--;
+    if (timerText.innerHTML < 0) {
+      timerText.innerHTML = 0;
+      console.log('you lose');
+      setTimeout(() => {
+        location.reload()
+      }, 1000)
+    }
 
-//   }
-//   timerGame()
-// }
+  }
+  timerGame()
+}
 
 
 

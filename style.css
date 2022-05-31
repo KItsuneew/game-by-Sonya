@@ -165,9 +165,6 @@ body {
   transition: .4s;
 }
 
-.overflow {
-  
-}
 
 .activeOveflow {
   background-color: #80808085;
