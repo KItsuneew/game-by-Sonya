@@ -15,8 +15,7 @@ const btnStartGachiGame = document.querySelector('.btn__gachi'),
   yourDiff = document.querySelector('.text__diff'),
   yourTime = document.querySelector('.text__time'),
   stepGame = document.querySelector('.btn__step'),
-  gameOption = document.querySelector('.game__option'),
-  yourStep = document.querySelector('.text__steps');
+  gameOption = document.querySelector('.game__option');
 
 
 const cardGeneratorGachi = () => {
@@ -149,6 +148,7 @@ const CheckCard = (e, val) => {
   const tabCard = document.querySelectorAll('.tab');
   const allCard = document.querySelectorAll('.card');
   const stepText = document.querySelector('.step');
+  const yourStep = document.querySelector('.text__steps');
   if (stepText) {
     stepText.textContent--;
   }
@@ -181,14 +181,16 @@ const CheckCard = (e, val) => {
     console.log('you win');
 
     setTimeout(() => {
-      if (step) {
-        step.style.opacity = '0'
+      if (stepText) {
+        stepText.style.opacity = '0'
       }
       sectionResult.classList.add('activeResult');
       overflowBack.classList.add('activeOveflow');
       yourResult.textContent = 'You WON';
       timerText.style.opacity = '0';
-      yourStep.textContent = (stepText.textContent == 0) ? 'Your steps: nice try))' : (stepText.textContent > 0) ? `Your steps won for: ${+val + +val / 2 - +stepText.textContent}` : 'nice try';
+      if (yourStep) {
+        yourStep.textContent = (stepText.textContent == 0) ? 'Your steps: nice try))' : (stepText.textContent > 0) ? `Your steps won for: ${+val + +val / 2 - +stepText.textContent}` : 'nice try';
+      }
       yourTime.textContent = `Your time won for: ${val * 4 - timerText.textContent}`
       yourDiff.textContent = (count == 16) ? 'Your difficult: Easy' : (count == 36) ? 'Your difficult: Medium' : (count == 64) ? 'Your difficult: Hard' : 'nice try )';
     }, 600)
@@ -205,6 +207,7 @@ function predTime(val) {
     timerText.textContent = timer;
     timer--;
     const stepText = document.querySelector('.step');
+    const yourStep = document.querySelector('.text__steps');
     if (timerText.textContent == 0 || stepText.textContent == 0) {
       if (stepText) {
         stepText.style.opacity = '0'
@@ -214,7 +217,10 @@ function predTime(val) {
       overflowBack.classList.add('activeOveflow');
       yourResult.textContent = 'You LOSE';
       timerText.style.opacity = '0';
-      yourStep.textContent = (stepText.textContent == 0) ? 'Your steps: nice try))' : (stepText.textContent > 0) ? `Your step: ${+val + +val / 2 - +stepText.textContent}` : 'nice try';
+      if (yourStep) {
+        yourStep.textContent = (stepText.textContent == 0) ? 'Your steps: nice try))' : (stepText.textContent > 0) ? `Your step: ${+val + +val / 2 - +stepText.textContent}` : 'nice try';
+      }
+
       yourTime.textContent = (timerText.textContent == 0) ? 'Your time: nice try))' : (timerText.textContent > 0) ? `Your time: ${val * 4 - timerText.textContent}` : 'nice try';
       yourDiff.textContent = (val == 16) ? 'Your difficult: Easy' : (val == 36) ? 'Your difficult: Medium' : (val == 64) ? 'Your difficult: Hard' : 'nice try )';
 
@@ -265,6 +271,9 @@ btnFull.forEach(el => [
 
 stepGame.addEventListener('click', () => {
   let p = document.createElement('p');
+  let step = document.createElement('p');
+  step.classList.add('text__result');
+  step.classList.add('text__steps');
   p.classList.add('step');
   gameOption.appendChild(p);
 
