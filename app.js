@@ -12,7 +12,11 @@ const btnStartGachiGame = document.querySelector('.btn__gachi'),
   overflowBack = document.querySelector('.overflow'),
   buttonRestartGame = document.querySelector('.button__restart'),
   yourResult = document.querySelector('.text__your'),
-  yourDiff = document.querySelector('.text__diff');
+  yourDiff = document.querySelector('.text__diff'),
+  yourTime = document.querySelector('.text__time'),
+  stepGame = document.querySelector('.btn__step'),
+  gameOption = document.querySelector('.game__option'),
+  yourStep = document.querySelector('.text__steps');
 
 
 const cardGeneratorGachi = () => {
@@ -126,7 +130,7 @@ const gameNormalPictureOne = (value) => {
         cnt++;
         card.addEventListener("click", (e) => {
           card.classList.toggle('activeCard');
-          CheckCard(e)
+          CheckCard(e, value)
         });
 
       }
@@ -139,11 +143,16 @@ const gameNormalPictureOne = (value) => {
 }
 
 let count = 0;
-const CheckCard = (e) => {
+const CheckCard = (e, val) => {
   const tg = e.target;
   tg.classList.add('tab')
   const tabCard = document.querySelectorAll('.tab');
   const allCard = document.querySelectorAll('.card');
+  const stepText = document.querySelector('.step');
+  if (stepText) {
+    stepText.textContent--;
+  }
+
   if (tabCard.length == 2) {
 
     if (tabCard[0].getAttribute('name') == tabCard[1].getAttribute('name')) {
@@ -173,9 +182,10 @@ const CheckCard = (e) => {
     setTimeout(() => {
       sectionResult.classList.add('activeResult');
       overflowBack.classList.add('activeOveflow');
-      yourResult.textContent = 'You WIN';
+      yourResult.textContent = 'You WON';
+      yourStep.textContent = (stepText.textContent == 0) ? 'Your steps: nice try))' : (stepText.textContent > 0) ? `Your steps: ${val + val / 2 + stepText.textContent}` : 'nice try';
+      yourTime.textContent = `Your time won for: ${val * 4 - timerText.textContent}`
       yourDiff.textContent = (count == 16) ? 'Your difficult: Easy' : (count == 36) ? 'Your difficult: Medium' : (count == 64) ? 'Your difficult: Hard' : 'nice try )';
-
     }, 600)
   }
 
@@ -186,15 +196,19 @@ const CheckCard = (e) => {
 function predTime(val) {
   let timer = val * 4;
   function timerGame() {
-    setTimeout(timerGame, 1000);
+    let timerCode = setTimeout(timerGame, 1000);
     timerText.textContent = timer;
     timer--;
-    if (timerText.innerHTML < 0) {
-      timerText.innerHTML = 0;
-      console.log('you lose');
-      setTimeout(() => {
-        location.reload()
-      }, 1000)
+    const stepText = document.querySelector('.step');
+    if (timerText.textContent < 0 || stepText.textContent == 0) {
+      sectionResult.classList.add('activeResult');
+      clearTimeout(timerCode)
+      overflowBack.classList.add('activeOveflow');
+      yourResult.textContent = 'You LOSE';
+      yourStep.textContent = (stepText.textContent == 0) ? 'Your steps: nice try))' : (stepText.textContent > 0) ? `Your wor for step: ${stepText.textContent}` : 'nice try';
+      yourTime.textContent = (timerText.textContent == 0) ? 'Your time: nice try))' : (timerText.textContent > 0) ? `Your won for time: ${val * 4 - timerText.textContent}` : 'nice try';
+      yourDiff.textContent = (val == 16) ? 'Your difficult: Easy' : (val == 36) ? 'Your difficult: Medium' : (val == 64) ? 'Your difficult: Hard' : 'nice try )';
+
     }
 
   }
@@ -226,15 +240,26 @@ btnFull.forEach(el => [
   el.addEventListener('click', () => {
     sectionDifficultWindow.classList.remove('activeForSelectDifficult');
     sectionBoardGame.classList.add('activeGame');
+    const step = document.querySelector('.step');
+    if (step) {
+      step.textContent = Number(el.value) + Number(el.value / 2);
+    }
     setTimeout(() => {
       gameNormalPictureOne(el.value);
       mainSection.classList.add('block');
-      predTime(el.value)
+      predTime(el.value);
     }, 1000)
 
   })
 ])
 
+
+stepGame.addEventListener('click', () => {
+  let p = document.createElement('p');
+  p.classList.add('step');
+  gameOption.appendChild(p);
+
+})
 
 btnPause.addEventListener('click', () => {
   if (btnPause.textContent == 'pause') {

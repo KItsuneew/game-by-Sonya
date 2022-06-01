@@ -121,6 +121,10 @@ body {
 }
 
 .time {
+
+}
+
+.game__option {
   font-size: 48px;
   position: absolute;
   right: 10%;
