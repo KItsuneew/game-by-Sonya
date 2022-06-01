@@ -15,7 +15,9 @@ const btnStartGachiGame = document.querySelector('.btn__gachi'),
   yourDiff = document.querySelector('.text__diff'),
   yourTime = document.querySelector('.text__time'),
   stepGame = document.querySelector('.btn__step'),
-  gameOption = document.querySelector('.game__option');
+  gameOption = document.querySelector('.game__option'),
+  containerResult = document.querySelector('.container__result'),
+  yourStep = document.querySelector('.text__steps');
 
 
 const cardGeneratorGachi = () => {
@@ -148,7 +150,7 @@ const CheckCard = (e, val) => {
   const tabCard = document.querySelectorAll('.tab');
   const allCard = document.querySelectorAll('.card');
   const stepText = document.querySelector('.step');
-  const yourStep = document.querySelector('.text__steps');
+
   if (stepText) {
     stepText.textContent--;
   }
@@ -207,22 +209,38 @@ function predTime(val) {
     timerText.textContent = timer;
     timer--;
     const stepText = document.querySelector('.step');
-    const yourStep = document.querySelector('.text__steps');
-    if (timerText.textContent == 0 || stepText.textContent == 0) {
+
+    if (timerText.textContent == 0 || stepText) {
+
       if (stepText) {
         stepText.style.opacity = '0'
       }
-      sectionResult.classList.add('activeResult');
+
       clearTimeout(timerCode)
+      timerText.style.opacity = '0';
+      sectionResult.classList.add('activeResult');
       overflowBack.classList.add('activeOveflow');
       yourResult.textContent = 'You LOSE';
-      timerText.style.opacity = '0';
-      if (yourStep) {
-        yourStep.textContent = (stepText.textContent == 0) ? 'Your steps: nice try))' : (stepText.textContent > 0) ? `Your step: ${+val + +val / 2 - +stepText.textContent}` : 'nice try';
+
+      if (yourStep && stepText) {
+
+        yourStep.textContent = (stepText.textContent == 0 || stepText.textContent == stepText.textContent) ? 'Your steps: nice try))' : 'nice try';
       }
 
       yourTime.textContent = (timerText.textContent == 0) ? 'Your time: nice try))' : (timerText.textContent > 0) ? `Your time: ${val * 4 - timerText.textContent}` : 'nice try';
       yourDiff.textContent = (val == 16) ? 'Your difficult: Easy' : (val == 36) ? 'Your difficult: Medium' : (val == 64) ? 'Your difficult: Hard' : 'nice try )';
+
+    }
+    else if (stepText && stepText.textContent == 0) {
+      clearTimeout(timerCode)
+      timerText.style.opacity = '0';
+      sectionResult.classList.add('activeResult');
+      overflowBack.classList.add('activeOveflow');
+      yourResult.textContent = 'You LOSE';
+      stepText.style.opacity = '0';
+      yourTime.textContent = (timerText.textContent == 0) ? 'Your time: nice try))' : (timerText.textContent > 0) ? `Your time: ${val * 4 - timerText.textContent}` : 'nice try';
+      yourDiff.textContent = (val == 16) ? 'Your difficult: Easy' : (val == 36) ? 'Your difficult: Medium' : (val == 64) ? 'Your difficult: Hard' : 'nice try )';
+      yourStep.textContent = (stepText.textContent == 0 || stepText.textContent == stepText.textContent) ? 'Your steps: nice try))' : 'nice try';
 
     }
 
@@ -271,9 +289,6 @@ btnFull.forEach(el => [
 
 stepGame.addEventListener('click', () => {
   let p = document.createElement('p');
-  let step = document.createElement('p');
-  step.classList.add('text__result');
-  step.classList.add('text__steps');
   p.classList.add('step');
   gameOption.appendChild(p);
 
