@@ -179,11 +179,16 @@ const CheckCard = (e, val) => {
 
   if (allCard.length === count) {
     console.log('you win');
+
     setTimeout(() => {
+      if (step) {
+        step.style.opacity = '0'
+      }
       sectionResult.classList.add('activeResult');
       overflowBack.classList.add('activeOveflow');
       yourResult.textContent = 'You WON';
-      yourStep.textContent = (stepText.textContent == 0) ? 'Your steps: nice try))' : (stepText.textContent > 0) ? `Your steps: ${val + val / 2 + stepText.textContent}` : 'nice try';
+      timerText.style.opacity = '0';
+      yourStep.textContent = (stepText.textContent == 0) ? 'Your steps: nice try))' : (stepText.textContent > 0) ? `Your steps won for: ${+val + +val / 2 - +stepText.textContent}` : 'nice try';
       yourTime.textContent = `Your time won for: ${val * 4 - timerText.textContent}`
       yourDiff.textContent = (count == 16) ? 'Your difficult: Easy' : (count == 36) ? 'Your difficult: Medium' : (count == 64) ? 'Your difficult: Hard' : 'nice try )';
     }, 600)
@@ -194,19 +199,23 @@ const CheckCard = (e, val) => {
 
 
 function predTime(val) {
-  let timer = val * 4;
+  let timer = 1 * 4;
   function timerGame() {
     let timerCode = setTimeout(timerGame, 1000);
     timerText.textContent = timer;
     timer--;
     const stepText = document.querySelector('.step');
-    if (timerText.textContent < 0 || stepText.textContent == 0) {
+    if (timerText.textContent == 0 || stepText.textContent == 0) {
+      if (stepText) {
+        stepText.style.opacity = '0'
+      }
       sectionResult.classList.add('activeResult');
       clearTimeout(timerCode)
       overflowBack.classList.add('activeOveflow');
       yourResult.textContent = 'You LOSE';
-      yourStep.textContent = (stepText.textContent == 0) ? 'Your steps: nice try))' : (stepText.textContent > 0) ? `Your wor for step: ${stepText.textContent}` : 'nice try';
-      yourTime.textContent = (timerText.textContent == 0) ? 'Your time: nice try))' : (timerText.textContent > 0) ? `Your won for time: ${val * 4 - timerText.textContent}` : 'nice try';
+      timerText.style.opacity = '0';
+      yourStep.textContent = (stepText.textContent == 0) ? 'Your steps: nice try))' : (stepText.textContent > 0) ? `Your step: ${+val + +val / 2 - +stepText.textContent}` : 'nice try';
+      yourTime.textContent = (timerText.textContent == 0) ? 'Your time: nice try))' : (timerText.textContent > 0) ? `Your time: ${val * 4 - timerText.textContent}` : 'nice try';
       yourDiff.textContent = (val == 16) ? 'Your difficult: Easy' : (val == 36) ? 'Your difficult: Medium' : (val == 64) ? 'Your difficult: Hard' : 'nice try )';
 
     }
