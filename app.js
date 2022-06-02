@@ -8,6 +8,7 @@ const btnStartGachiGame = document.querySelector('.btn__gachi'),
   mainSection = document.querySelector('.section__game'),
   timerText = document.querySelector('.time'),
   btnPause = document.querySelector('.btn__pause'),
+  btnStart = document.querySelector('.btn__start'),
   sectionResult = document.querySelector('.section__result'),
   overflowBack = document.querySelector('.overflow'),
   buttonRestartGame = document.querySelector('.button__restart'),
@@ -57,7 +58,7 @@ const cardGeneratorGachi = () => {
     section.appendChild(card);
     card.appendChild(face);
     card.appendChild(back);
-
+    card.classList.add('activeCard')
     back.setAttribute("name", item.name);
     face.src = item.imgSrc;
 
@@ -126,13 +127,16 @@ const gameNormalPictureOne = (value) => {
         section.appendChild(card);
         card.appendChild(face);
         card.appendChild(back);
+        timerText.innerHTML = value * 4;
         card.classList.add('activeCard')
         card.style.order = Math.floor(Math.random() * (6 - 1) + 1)
         cnt++;
+        card.style.pointerEvents = 'none';
         card.addEventListener("click", (e) => {
           card.classList.toggle('activeCard');
           CheckCard(e, value)
         });
+        timerGame()
 
       }
 
@@ -154,9 +158,7 @@ const CheckCard = (e, val) => {
   if (stepText) {
     stepText.textContent--;
   }
-
   if (tabCard.length == 2) {
-
     if (tabCard[0].getAttribute('name') == tabCard[1].getAttribute('name')) {
       tabCard.forEach(el => {
         el.classList.remove('tab');
@@ -181,7 +183,6 @@ const CheckCard = (e, val) => {
 
   if (allCard.length === count) {
     console.log('you win');
-
     setTimeout(() => {
       sectionResult.classList.add('activeResult');
       overflowBack.classList.add('activeOveflow');
@@ -200,50 +201,68 @@ const CheckCard = (e, val) => {
 }
 
 
-function predTime(val) {
-  let timer = val * 4;
-  function timerGame() {
-    let timerCode = setTimeout(timerGame, 1000);
-    timerText.textContent = timer;
-    timer--;
-    const stepText = document.querySelector('.step');
 
-    if (timerText.textContent == 0) {
+let timerCode;
 
-      clearTimeout(timerCode)
-      sectionResult.classList.add('activeResult');
-      overflowBack.classList.add('activeOveflow');
-      yourResult.textContent = 'You LOSE';
-      timerText.style.opacity = '0'
-      if (yourStep && stepText) {
-        stepText.style.opacity = '0'
-        yourStep.textContent = (stepText.textContent == 0 || stepText.textContent == stepText.textContent) ? 'Your steps: nice try))' : 'nice try';
-      }
+function startTimer() {
+  const card = document.querySelectorAll('.card');
+  timerCode = setInterval(() => {
+    timerText.innerHTML = Number(timerText.innerHTML) - 1;
+  }, 1000)
+  card.forEach(el => {
+    el.style.pointerEvents = 'auto'
+  })
+}
 
-      yourTime.textContent = (timerText.textContent == 0) ? 'Your time: nice try))' : (timerText.textContent > 0) ? `Your time: ${val * 4 - timerText.textContent}` : 'nice try';
-      yourDiff.textContent = (val == 16) ? 'Your difficult: Easy' : (val == 36) ? 'Your difficult: Medium' : (val == 64) ? 'Your difficult: Hard' : 'nice try )';
 
-    }
-    else if (stepText && stepText.textContent == 0) {
+function stopTimer() {
+  clearInterval(timerCode);
+}
 
-      clearTimeout(timerCode)
-      timerText.style.opacity = '0';
-      sectionResult.classList.add('activeResult');
-      overflowBack.classList.add('activeOveflow');
-      yourResult.textContent = 'You LOSE';
-      stepText.style.opacity = '0';
-      yourTime.textContent = (timerText.textContent == 0) ? 'Your time: nice try))' : (timerText.textContent > 0) ? `Your time: ${val * 4 - timerText.textContent}` : 'nice try';
-      yourDiff.textContent = (val == 16) ? 'Your difficult: Easy' : (val == 36) ? 'Your difficult: Medium' : (val == 64) ? 'Your difficult: Hard' : 'nice try )';
+
+function timerGame() {
+
+  const stepText = document.querySelector('.step');
+
+  if (timerText.textContent == 0) {
+
+    clearTimeout(timerCode)
+    sectionResult.classList.add('activeResult');
+    overflowBack.classList.add('activeOveflow');
+    yourResult.textContent = 'You LOSE';
+    timerText.style.opacity = '0'
+    if (yourStep && stepText) {
+      stepText.style.opacity = '0'
       yourStep.textContent = (stepText.textContent == 0 || stepText.textContent == stepText.textContent) ? 'Your steps: nice try))' : 'nice try';
-
     }
+
+    yourTime.textContent = (timerText.textContent == 0) ? 'Your time: nice try))' : (timerText.textContent > 0) ? `Your time: ${val * 4 - timerText.textContent}` : 'nice try';
+    yourDiff.textContent = (val == 16) ? 'Your difficult: Easy' : (val == 36) ? 'Your difficult: Medium' : (val == 64) ? 'Your difficult: Hard' : 'nice try )';
 
   }
-  timerGame()
+  else if (stepText && stepText.textContent == 0) {
+
+    clearTimeout(timerCode)
+    timerText.style.opacity = '0';
+    sectionResult.classList.add('activeResult');
+    overflowBack.classList.add('activeOveflow');
+    yourResult.textContent = 'You LOSE';
+    stepText.style.opacity = '0';
+    yourTime.textContent = (timerText.textContent == 0) ? 'Your time: nice try))' : (timerText.textContent > 0) ? `Your time: ${val * 4 - timerText.textContent}` : 'nice try';
+    yourDiff.textContent = (val == 16) ? 'Your difficult: Easy' : (val == 36) ? 'Your difficult: Medium' : (val == 64) ? 'Your difficult: Hard' : 'nice try )';
+    yourStep.textContent = (stepText.textContent == 0 || stepText.textContent == stepText.textContent) ? 'Your steps: nice try))' : 'nice try';
+
+  }
+
 }
 
 
 
+
+
+
+btnStart.addEventListener('click', startTimer);
+btnPause.addEventListener('click', stopTimer);
 
 btnNextDiff.forEach(el => {
   el.addEventListener('click', () => {
@@ -258,6 +277,8 @@ btnStartGachiGame.addEventListener('click', () => {
   setTimeout(() => {
     cardGeneratorGachi();
     mainSection.classList.add('block');
+    yourTime.style.display = 'none';
+    yourDiff.style.display = 'none'
   }, 1000)
 
 
@@ -274,11 +295,11 @@ btnFull.forEach(el => [
     setTimeout(() => {
       gameNormalPictureOne(el.value);
       mainSection.classList.add('block');
-      predTime(el.value);
     }, 1000)
 
   })
 ])
+
 
 
 stepGame.addEventListener('click', () => {
@@ -288,16 +309,6 @@ stepGame.addEventListener('click', () => {
 
 })
 
-btnPause.addEventListener('click', () => {
-  if (btnPause.textContent == 'pause') {
-    btnPause.textContent = 'play_arrow';
-    clearTimeout(timerCode)
-
-  }
-  else {
-    btnPause.textContent = 'pause'
-  }
-})
 
 buttonRestartGame.addEventListener('click', () => {
   location.reload()
