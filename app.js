@@ -3,7 +3,6 @@ const btnStartGachiGame = document.querySelector('.btn__gachi'),
   btnNextDiff = document.querySelectorAll('.btn__diff'),
   sectionDifficultWindow = document.querySelector('.section__difficult'),
   sectionBoardGame = document.querySelector('.cont__game'),
-  btnEasy = document.querySelector('.btn__easy'),
   btnFull = document.querySelectorAll('.btn__difful'),
   mainSection = document.querySelector('.section__game'),
   timerText = document.querySelector('.time'),
@@ -18,7 +17,10 @@ const btnStartGachiGame = document.querySelector('.btn__gachi'),
   stepGame = document.querySelector('.btn__step'),
   gameOption = document.querySelector('.game__option'),
   containerResult = document.querySelector('.container__result'),
-  yourStep = document.querySelector('.text__steps');
+  yourStep = document.querySelector('.text__steps'),
+  btnCloseGuidline = document.querySelector('.btn__guidline'),
+  sectionGuidline = document.querySelector('.section__guidline'),
+  btnOpenGuidline = document.querySelector('.btn__addGuidline');
 
 
 const cardGeneratorGachi = () => {
@@ -58,7 +60,6 @@ const cardGeneratorGachi = () => {
     section.appendChild(card);
     card.appendChild(face);
     card.appendChild(back);
-    card.classList.add('activeCard')
     back.setAttribute("name", item.name);
     face.src = item.imgSrc;
 
@@ -128,7 +129,6 @@ const gameNormalPictureOne = (value) => {
         card.appendChild(face);
         card.appendChild(back);
         timerText.innerHTML = value * 4;
-        card.classList.add('activeCard')
         card.style.order = Math.floor(Math.random() * (6 - 1) + 1)
         cnt++;
         card.style.pointerEvents = 'none';
@@ -216,7 +216,11 @@ function startTimer() {
 
 
 function stopTimer() {
+  const card = document.querySelectorAll('.card');
   clearInterval(timerCode);
+  card.forEach(el => {
+    el.style.pointerEvents = 'none'
+  })
 }
 
 
@@ -255,10 +259,6 @@ function timerGame() {
   }
 
 }
-
-
-
-
 
 
 btnStart.addEventListener('click', startTimer);
@@ -300,6 +300,12 @@ btnFull.forEach(el => [
   })
 ])
 
+function openOrCloseGuidline() {
+  sectionGuidline.classList.toggle('activeGuidline')
+}
+
+btnCloseGuidline.addEventListener('click', openOrCloseGuidline);
+btnOpenGuidline.addEventListener('click', openOrCloseGuidline)
 
 
 stepGame.addEventListener('click', () => {

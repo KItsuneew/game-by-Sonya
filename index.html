@@ -17,12 +17,52 @@
 </head>
 
 <body>
+  <div class="section__guidline">
+    <div class="container">
+      <h2>Краткий экскурс по игре</h2>
+      <ul> Есть два основных режима игры
+        <li><b>Gachiмученник</b> </li>
+        <li><b>Борщевар</b></li>
+      </ul>
+      <p class="text__guidline">В режиме Gachiмученник отсутствует время на игру и ходы, которые будут как-то
+        ограничивать геймплей</p>
+      <p class="text__guidline">Также в данном режиме ограниченное количество карточек, их 16. Больше не будет, то есть
+        это режим чисто
+        поиграть просто так</p>
+      <p class="text__guidline">В режиме Борщевар уже будет два выбора режима это: <b>По времени</b> и <b>Время +
+          ходы</b></p>
+      <p class="text__guidline">В первом режиме будет ограничение по времени в зависимости от выбранной сложности.</p>
+      <p class="text__guidline">Во втором режиме помимо огранения по времени будет ограничение по количеству ходов</p>
+      <p class="text__guidline">Существует три сложности игры:</p>
+      <span class="span__guidline">Easy (16 карточек): при выборе данной сложности в режиме <b>По времени</b> дается 64
+        секунды на игру / При
+        выборе <b>Время
+          +
+          Ходы</b> вдобавок дается 24 хода</span>
+      <span class="span__guidline">Medium (36 карточек): при выборе данной сложности в режиме <b>По времени</b> дается
+        144 секунды на игру /
+        При выборе
+        <b>Время +
+          Ходы</b> вдобавок дается 54 хода </span>
+      <span class="span__guidline">Hard (64 карточки): при выборе данной сложности в режиме <b>По времени</b> дается 256
+        секунд на игру / При
+        выборе <b>Время
+          +
+          Ходы</b> вдобавок дается 96 ходов </span>
+      <p class="text__guidline">Есть возможность ставить таймер на паузу во время игры и также его возобновлять, во
+        время паузы не будет
+        возможности нажимать на карточки, они будут неактивными, можете не пробовать даже)</p>
+      <p class="">Игра запускается после нажатия на кнопку <b>старта</b> Таймера</p>
+      <button class="btn__guidline">Hide Guidline</button>
+    </div>
+  </div>
   <section class="section__start">
     <div class="container">
       <h3 class="title title__game">Memory Games</h3>
       <button class="btn btn__gachi">Gachiмученник</button>
       <button class="btn btn__diff">По времени</button>
       <button class="btn btn__diff btn__step">Время + ходы</button>
+      <button class="btn__addGuidline btn">Open Guidline</button>
     </div>
   </section>
   <section class="section__difficult">
@@ -31,6 +71,7 @@
       <button class="btn btn__easy btn__difful" value="16">Easy</button>
       <button class="btn btn__medium btn__difful" value="36">Medium</button>
       <button class="btn btn__hard btn__difful" value="64">Hard</button>
+
     </div>
   </section>
   <section class="section__game">
