@@ -183,14 +183,12 @@ const CheckCard = (e, val) => {
     console.log('you win');
 
     setTimeout(() => {
-      if (stepText) {
-        stepText.style.opacity = '0'
-      }
       sectionResult.classList.add('activeResult');
       overflowBack.classList.add('activeOveflow');
       yourResult.textContent = 'You WON';
       timerText.style.opacity = '0';
-      if (yourStep) {
+      if (yourStep && stepText) {
+        stepText.style.opacity = '0'
         yourStep.textContent = (stepText.textContent == 0) ? 'Your steps: nice try))' : (stepText.textContent > 0) ? `Your steps won for: ${+val + +val / 2 - +stepText.textContent}` : 'nice try';
       }
       yourTime.textContent = `Your time won for: ${val * 4 - timerText.textContent}`
@@ -203,27 +201,22 @@ const CheckCard = (e, val) => {
 
 
 function predTime(val) {
-  let timer = 1 * 4;
+  let timer = val * 4;
   function timerGame() {
     let timerCode = setTimeout(timerGame, 1000);
     timerText.textContent = timer;
     timer--;
     const stepText = document.querySelector('.step');
 
-    if (timerText.textContent == 0 || stepText) {
-
-      if (stepText) {
-        stepText.style.opacity = '0'
-      }
+    if (timerText.textContent == 0) {
 
       clearTimeout(timerCode)
-      timerText.style.opacity = '0';
       sectionResult.classList.add('activeResult');
       overflowBack.classList.add('activeOveflow');
       yourResult.textContent = 'You LOSE';
-
+      timerText.style.opacity = '0'
       if (yourStep && stepText) {
-
+        stepText.style.opacity = '0'
         yourStep.textContent = (stepText.textContent == 0 || stepText.textContent == stepText.textContent) ? 'Your steps: nice try))' : 'nice try';
       }
 
@@ -232,6 +225,7 @@ function predTime(val) {
 
     }
     else if (stepText && stepText.textContent == 0) {
+
       clearTimeout(timerCode)
       timerText.style.opacity = '0';
       sectionResult.classList.add('activeResult');
@@ -297,6 +291,7 @@ stepGame.addEventListener('click', () => {
 btnPause.addEventListener('click', () => {
   if (btnPause.textContent == 'pause') {
     btnPause.textContent = 'play_arrow';
+    clearTimeout(timerCode)
 
   }
   else {
