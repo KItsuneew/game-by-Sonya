@@ -132,6 +132,8 @@ const gameNormalPictureOne = (value) => {
         card.style.order = Math.floor(Math.random() * (6 - 1) + 1)
         cnt++;
         card.style.pointerEvents = 'none';
+        btnStart.classList.add('activeOption');
+        btnPause.classList.add('activeOption');
         card.addEventListener("click", (e) => {
           card.classList.toggle('activeCard');
           CheckCard(e, value)

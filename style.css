@@ -179,6 +179,14 @@ body {
   top: 5%;
 }
 
+.btn__option {
+  opacity: 0;
+}
+
+.activeOption {
+  opacity: 1;
+}
+
 .section__result {
   width: 900px;
   height: 450px;
