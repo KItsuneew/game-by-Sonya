@@ -128,17 +128,17 @@ const gameNormalPictureOne = (value) => {
         section.appendChild(card);
         card.appendChild(face);
         card.appendChild(back);
-        timerText.innerHTML = value * 4;
+        timerText.textContent = value * 4;
         card.style.order = Math.floor(Math.random() * (6 - 1) + 1)
         cnt++;
         card.style.pointerEvents = 'none';
+        card.classList.add('activeCard')
         btnStart.classList.add('activeOption');
         btnPause.classList.add('activeOption');
         card.addEventListener("click", (e) => {
           card.classList.toggle('activeCard');
           CheckCard(e, value)
         });
-        timerGame()
 
       }
 
@@ -208,7 +208,9 @@ let timerCode;
 
 function startTimer() {
   const card = document.querySelectorAll('.card');
+
   timerCode = setInterval(() => {
+    timerGame();
     timerText.innerHTML = Number(timerText.innerHTML) - 1;
   }, 1000)
   card.forEach(el => {
@@ -226,12 +228,11 @@ function stopTimer() {
 }
 
 
-function timerGame() {
+function timerGame(val) {
 
   const stepText = document.querySelector('.step');
-
+  const allCard = document.querySelectorAll('.card');
   if (timerText.textContent == 0) {
-
     clearTimeout(timerCode)
     sectionResult.classList.add('activeResult');
     overflowBack.classList.add('activeOveflow');
@@ -241,9 +242,8 @@ function timerGame() {
       stepText.style.opacity = '0'
       yourStep.textContent = (stepText.textContent == 0 || stepText.textContent == stepText.textContent) ? 'Your steps: nice try))' : 'nice try';
     }
-
     yourTime.textContent = (timerText.textContent == 0) ? 'Your time: nice try))' : (timerText.textContent > 0) ? `Your time: ${val * 4 - timerText.textContent}` : 'nice try';
-    yourDiff.textContent = (val == 16) ? 'Your difficult: Easy' : (val == 36) ? 'Your difficult: Medium' : (val == 64) ? 'Your difficult: Hard' : 'nice try )';
+    yourDiff.textContent = (allCard.length == 16) ? 'Your difficult: Easy' : (allCard.length == 36) ? 'Your difficult: Medium' : (allCard.length == 64) ? 'Your difficult: Hard' : 'nice try )';
 
   }
   else if (stepText && stepText.textContent == 0) {
